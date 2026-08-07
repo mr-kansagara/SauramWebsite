@@ -57,13 +57,13 @@ Blazor or ASP.NET Core MVC.
 1. **Purpose:** convert skepticism into trust — who makes the food and why.
 2. **Layout:** hero → who-we-are split → journey timeline → vision/mission/values → founder (olive) → excellence + why split → awards → team → CTA.
 3. **Section order:** as above; storytelling before people, people before CTA.
-4. **Content:** "Rooted in purity. Driven by trust." headline; journey uses *named eras* (The roots / The founding / …) with `(year placeholder)`; founder name/portrait placeholders.
+4. **Content:** "Rooted in purity. Driven by trust." headline; journey uses *named eras* (The roots / The founding / …) with `(year placeholder)`; two real co-founders — Raj Kansagara and Jaydeep Kalariya — with portraits (`.founder-duo` in the olive section, and the first two `.person` cards in the team grid).
 5. **Components:** `.vtimeline`, promise cards, `.team-grid` with `.ph` avatars, doc-cards for awards.
 6. **Mobile:** every split stacks (media first in story section); timeline stays left-rail.
 7. **Desktop:** `why-grid` 2-col; values 4-up; team 4-up.
 8. **Animations:** timeline items reveal sequentially; card lifts.
 9. **CTAs:** "See the Process" (olive) mid-page; "Partner With Us" in founder section; end banner → Products.
-10. **SEO:** JSON-LD `AboutPage` + `Organization` `founder` when real name lands.
+10. **SEO:** JSON-LD `AboutPage` + `Organization` with both `founder` entries (Raj Kansagara, Jaydeep Kalariya) still to be added.
 11. **A11y:** timeline is semantic headings + paragraphs, not a list of floats.
 12. **Dev:** replace era labels with real years by editing `.vt-year` text only.
 
@@ -243,8 +243,13 @@ Blazor or ASP.NET Core MVC.
 ---
 
 ## Placeholder master list (before launch)
-Contact details & map embeds · FSSAI licence number + certificate scans · founder/team
-names & portraits · journey years · testimonials/reviews with permission · statistics ·
-MRPs & container loadabilities · policy legal review · social profile URLs · form backends
-(contact, distributor, export, newsletter) · farm/factory/food/lifestyle
-photography for every `.ph` slot.
+FSSAI licence number + certificate scans · the two remaining team names & portraits (Quality
+Lead, Sales & Partnerships) · journey years ·
+testimonials/reviews with permission · statistics · MRPs & container loadabilities · policy
+legal review · Instagram/Facebook/LinkedIn profile URLs · form backends (contact,
+distributor, export, newsletter) · real farm/factory/food/lifestyle photography to replace
+the temporary stock images in `Assets/placeholders/` (see that folder's `README.md`) ·
+coverage + export-corridor maps (currently blank base maps) · gallery video slots.
+
+**Done:** contact details (address, phone/WhatsApp, email) and the Google Maps embed on
+`index.html` + `contact.html` are live — sourced from `Details.txt`.

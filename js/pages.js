@@ -332,21 +332,22 @@
     $('#pdNutrition').innerHTML = p.nutrition.map(function (r) { return '<tr><th scope="row">' + r[0] + '</th><td>' + r[1] + '</td></tr>'; }).join('');
 
     var mainWrap = $('#pdMain'), mainImg = $('#pdMainImg'), mainPh = $('#pdMainPh');
-    function showMain(src, isPh) {
+    function showMain(src, isPh, alt) {
       if (isPh || !src) { mainImg.classList.add('hidden'); mainPh.classList.remove('hidden'); mainWrap.style.cursor = 'default'; }
       else {
         mainPh.classList.add('hidden'); mainImg.classList.remove('hidden');
         mainImg.src = src; mainWrap.style.cursor = 'zoom-in';
-        mainImg.alt = 'SAURAM ' + p.name + ' ' + p.note + ' pack';
+        mainImg.alt = alt || ('SAURAM ' + p.name + ' ' + p.note + ' pack');
       }
     }
     showMain(p.img, !p.img);
-    /* thumbs: real photo + two honest placeholder slots */
+    /* thumbs: real pack photo + two temporary placeholder views
+       (swap the placeholder srcs for real lifestyle / texture shots per product) */
     var thumbs = $('#pdThumbs');
     var thumbDefs = [
       { src: p.img, ph: !p.img, label: 'Pack' },
-      { src: '', ph: true, label: 'Lifestyle' },
-      { src: '', ph: true, label: 'Texture' }
+      { src: 'Assets/placeholders/tadka-pan.jpg', ph: false, label: 'Lifestyle', alt: 'Cooked dish in a pan (temporary placeholder photograph)' },
+      { src: 'Assets/placeholders/spices-flatlay.jpg', ph: false, label: 'Texture', alt: 'Whole spices laid out on a board (temporary placeholder photograph)' }
     ];
     thumbs.innerHTML = '';
     thumbDefs.forEach(function (t, i) {
@@ -359,7 +360,7 @@
       b.addEventListener('click', function () {
         $$('.pd-thumb', thumbs).forEach(function (x) { x.classList.remove('active'); });
         b.classList.add('active');
-        showMain(t.src, t.ph);
+        showMain(t.src, t.ph, t.alt);
       });
       thumbs.appendChild(b);
     });

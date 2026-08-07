@@ -104,8 +104,8 @@ commerce moments.
 12. **CTA banner** — rounded olive panel, sunburst motif, gold button.
 13. **Gallery** — CSS-columns masonry (2 cols mobile, 3 desktop) mixing all 8 product
     photos with 3 designed photo-slot placeholders (Farm, Manufacturing, Food & Table).
-14. **Contact** — split: info list (address/phone/email — *all placeholders*) + map
-    placeholder panel. "Business Inquiry" mailto button.
+14. **Contact** — split: info list (real address, phone/WhatsApp and email) + Google Maps
+    embed (`.map-embed`) with a "Get directions" link. "Business Inquiry" mailto button.
 15. **Footer** — near-black olive; inline ivory seal + wordmark; quick links, product
     links, newsletter (front-end only — wire to a real service), social icons
     (*placeholder hrefs*), gold gradient top hairline.
@@ -128,9 +128,11 @@ Because every photo is now pre-cropped to the front unit at a single ratio, imag
 straight into `object-fit:cover` frames with no per-image CSS. The old `.crop-bottle`
 oversize-and-clip utility has been removed.
 
-**Photography to shoot** (replaces `.ph` placeholder panels): Saurashtra farm/field at
-golden hour (story + gallery), manufacturing line (gallery), plated food with tadka
-(gallery), and a Google Maps embed (contact).
+**Photography to shoot** (replaces the temporary stock images in `Assets/placeholders/`,
+wired into `.ph` panels via `.ph-img`): Saurashtra farm/field at golden hour (story +
+gallery), manufacturing line (gallery), plated food with tadka (gallery), facility
+exterior/clean room, and the in-house testing bench. The Google Maps embed on contact and
+home is live.
 
 ## 7. Motion
 

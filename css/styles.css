@@ -695,6 +695,46 @@ body.menu-open .mobile-menu-cta{opacity:1}
 }
 @media (min-width:1024px){.story-grid{grid-template-columns:1.1fr 1fr}}
 
+/* Founders' note: the portrait pair leads, so the media column takes the larger share
+   and the heading steps down a size to keep the two columns balanced in height. */
+@media (min-width:1024px){
+  .story-grid-founders{
+    grid-template-columns:1.75fr 1fr;
+    gap:clamp(1.75rem, 3vw, 2.75rem);
+  }
+}
+.story-grid-founders .section-title{font-size:clamp(1.75rem, 2.9vw, 2.35rem)}
+
+/* Two founders side by side inside a story-media column */
+.founder-duo{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(.6rem, 1.3vw, 1rem);
+  align-items:stretch;
+}
+.founder-card{
+  position:relative;margin:0;overflow:hidden;
+  border-radius:var(--radius);
+  border:1px solid rgba(217,182,95,.35);
+  background:linear-gradient(165deg, var(--olive-800), var(--olive-950));
+  box-shadow:var(--shadow-1);
+}
+/* height:auto is required — the img's height attribute would otherwise beat aspect-ratio */
+.founder-card img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;object-position:50% 26%}
+.founder-card figcaption{
+  position:absolute;left:0;right:0;bottom:0;
+  padding:2.4rem .85rem .8rem;
+  background:linear-gradient(transparent, rgba(24,31,16,.88));
+}
+.founder-card .fc-name{
+  display:block;font-family:var(--font-display);font-weight:400;
+  font-size:clamp(.95rem, 1.6vw, 1.1rem);line-height:1.3;color:var(--ivory);
+}
+.founder-card .fc-role{
+  display:block;margin-top:.2rem;
+  font-size:.64rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold-soft);
+}
+
 .story-content .section-title{margin-bottom:1.4rem}
 .story-content p{margin-bottom:1.2rem;color:rgba(247,243,234,.78);max-width:56ch}
 .story-content strong{color:var(--gold-soft);font-weight:600}
@@ -758,6 +798,36 @@ body.menu-open .mobile-menu-cta{opacity:1}
   color:#5C4520}
 .ph-kraft .ph-sub{color:#6E5836}
 .ph-map{min-height:420px;height:100%}
+
+/* Slots filled with temporary stock imagery.
+   Swap the <img src> for the real photograph — the panel keeps its styling,
+   and the gradient below still shows if an image ever fails to load. */
+.ph-img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover}
+.ph-img-contain{object-fit:contain;padding:1.6rem;background:#FCFAF4}
+.ph-cap{
+  position:absolute;left:0;right:0;bottom:0;z-index:1;
+  padding:2.6rem .9rem .85rem;
+  font-size:.68rem;font-weight:700;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--ivory);
+  background:linear-gradient(transparent, rgba(24,31,16,.78));
+}
+
+/* ==========================================================================
+   Map embeds (Google Maps)
+   ========================================================================== */
+.map-embed{
+  position:relative;overflow:hidden;
+  min-height:380px;height:100%;
+  border-radius:var(--radius);
+  border:1px solid var(--line);
+  background:var(--cream-deep);
+  box-shadow:var(--shadow-1);
+}
+.map-embed iframe{position:absolute;inset:0;display:block;width:100%;height:100%;border:0}
+.map-actions{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.4rem;
+  margin-top:1rem;font-size:.88rem;color:var(--muted);
+}
 
 /* ==========================================================================
    11. STATISTICS
@@ -1565,6 +1635,7 @@ html.js .reveal.in{opacity:1;transform:none}
   padding:0;
 }
 .person .avatar .ph-motif{width:44%;margin-bottom:0}
+.person .avatar img{width:100%;height:100%;object-fit:cover}
 .person h3{font-family:var(--font-display);font-weight:400;font-size:1.12rem;color:var(--olive-900)}
 .person p{font-size:.82rem;color:var(--muted);letter-spacing:.04em}
 
