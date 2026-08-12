@@ -580,7 +580,7 @@ body.menu-open .mobile-menu-cta{opacity:1}
 }
 .product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-2)}
 .product-media{
-  height:290px;overflow:hidden;
+  aspect-ratio:4/5;overflow:hidden;
   background:var(--cream);
 }
 .product-media img{

@@ -33,8 +33,6 @@ point at two files here.
 | `produce-market.jpg` | `manufacturing.html` step 1 (Farm & Mandi) |
 | `spice-market.jpg` | `manufacturing.html` step 2 (Cleaning Line) |
 | `spices-flatlay.jpg` | `manufacturing.html` step 3 (Grading & Sorting), product "Texture" thumb |
-| `oil-bottle.jpg` | `manufacturing.html` step 4 + facility grid, `gallery.html` (Wooden Ghani) |
-| `kraft-packs.jpg` | `manufacturing.html` step 5 + facility grid, `quality.html`, `export.html`, `gallery.html` (Packing Line) |
 | `lab-bench.jpg` | `manufacturing.html` step 6 (Quality Bench) |
 | `lab-team.jpg` | `manufacturing.html` (Hygiene & Safety), `quality.html` (Laboratory) |
 | `warehouse-aisle.jpg` | `manufacturing.html` step 7 + `about.html` facility panel, `index.html` gallery |
@@ -63,3 +61,8 @@ These were **not** filled, because a stock image there would misrepresent the bu
 - The two unnamed team portraits (`about.html` — Quality Lead, Sales & Partnerships) — no
   stand-in faces. The co-founders' own portraits live in `Assets/team/`, not here.
 - The two video slots (`gallery.html`) — a still would imply a video exists.
+- The oil-press and packing-line slots (`export.html`, `quality.html`, `manufacturing.html`
+  steps 4–5 + facility grid, `gallery.html`) — the stock photos formerly here (`oil-bottle.jpg`,
+  `kraft-packs.jpg`) showed a different product (olive oil, not groundnut oil) and, in the
+  packing-line shot, a visible third-party brand logo on the boxes. Both were removed rather
+  than replaced with another stock substitute.
