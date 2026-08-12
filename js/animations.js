@@ -10,6 +10,7 @@
   if (reduceMotion || !window.gsap) return;
 
   gsap.registerPlugin(ScrollTrigger, SplitText);
+  if (window.Flip) gsap.registerPlugin(Flip);
 
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $$(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
@@ -102,18 +103,112 @@
     });
   }
 
+  /* ---------- FLIP layout animation for filter / sort / paginate ----------
+     js/pages.js updates the grids by toggling .hidden and re-appending nodes,
+     which normally snaps. We snapshot the layout in the capture phase (before
+     pages.js's own bubble-phase handlers mutate the DOM), then animate every
+     card to its new position on the next frame. Items entering/leaving the
+     result set scale-fade in and out. */
+  function flipLayout(container, getItems, interactionRoots) {
+    if (!window.Flip) return;
+    var pending = false;
+    function snapshot() {
+      if (pending) return;
+      pending = true;
+      var state = Flip.getState(getItems());
+      var prevHeight = container.offsetHeight;
+      requestAnimationFrame(function () {
+        pending = false;
+        /* While Flip absolutizes the cards the container would collapse and
+           the footer would ride up over the grid — so we pin its height and
+           tween it to the new layout's height alongside the cards. */
+        var newHeight = container.offsetHeight;
+        /* clip while animating so cards can never paint past the container
+           into the footer; position:relative makes the clip apply to the
+           absolutized cards too */
+        gsap.set(container, { position: 'relative', overflow: 'clip' });
+        gsap.fromTo(container,
+          { height: prevHeight },
+          { height: newHeight, duration: 0.55, ease: 'power3.inOut', overwrite: 'auto' });
+        Flip.from(state, {
+          duration: 0.55, ease: 'power3.inOut', stagger: 0.015, absolute: true,
+          onEnter: function (els) {
+            return gsap.fromTo(els, { autoAlpha: 0, scale: 0.92 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: 'power2.out' });
+          },
+          onLeave: function (els) {
+            return gsap.to(els, { autoAlpha: 0, scale: 0.92, duration: 0.3, ease: 'power2.in' });
+          },
+          /* release the pinned height only after every staggered card has
+             landed and been restored to normal flow — clearing it any earlier
+             lets the grid collapse for a frame and the footer jump up */
+          onComplete: function () { gsap.set(container, { clearProps: 'height,position,overflow' }); }
+        });
+      });
+    }
+    interactionRoots.forEach(function (root) {
+      if (!root) return;
+      ['input', 'change', 'click'].forEach(function (ev) { root.addEventListener(ev, snapshot, true); });
+    });
+  }
+
   var productGrid = $('#productGrid');
   if (productGrid) {
-    staggerGrid($$('.product-card:not(.hidden)', productGrid), [
+    var productControls = [
       $('#filtersBox'), $('#catalogSearch'), $('#catalogSort'), $('#pagination'), $('#clearFilters')
-    ]);
+    ];
+    staggerGrid($$('.product-card:not(.hidden)', productGrid), productControls);
+    flipLayout(productGrid, function () { return $$('.product-card', productGrid); }, productControls);
   }
 
   var galleryGrid = $('#galleryGrid');
   if (galleryGrid) {
-    staggerGrid($$('.masonry-item:not(.hidden)', galleryGrid), [
+    var galleryControls = [
       $('[data-gfilter]') && $('[data-gfilter]').parentElement, $('#loadMore')
-    ]);
+    ];
+    staggerGrid($$('.masonry-item:not(.hidden)', galleryGrid), galleryControls);
+    flipLayout(galleryGrid, function () { return $$('.masonry-item', galleryGrid); }, galleryControls);
+  }
+
+  /* ---------- Product cards: cursor-tracked 3D tilt (fine pointers) ----------
+     GSAP owns the card's transform on hover (lift + tilt); the CSS :hover
+     shadow still applies underneath. */
+  if (window.matchMedia('(pointer: fine)').matches) {
+    $$('.product-card').forEach(function (card) {
+      var rxTo = gsap.quickTo(card, 'rotationX', { duration: 0.5, ease: 'power3.out' });
+      var ryTo = gsap.quickTo(card, 'rotationY', { duration: 0.5, ease: 'power3.out' });
+      card.addEventListener('mouseenter', function () {
+        gsap.set(card, { transformPerspective: 900 });
+        gsap.to(card, { y: -6, duration: 0.35, ease: 'power2.out' });
+      });
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        ryTo(((e.clientX - r.left) / r.width - 0.5) * 7);
+        rxTo(-((e.clientY - r.top) / r.height - 0.5) * 5);
+      });
+      card.addEventListener('mouseleave', function () {
+        rxTo(0); ryTo(0);
+        gsap.to(card, { y: 0, duration: 0.4, ease: 'power2.out' });
+      });
+    });
+  }
+
+  /* ---------- Gallery lightbox: crossfade between images ----------
+     pages.js swaps lbImg.src instantly; our listeners are registered after
+     its handlers (script order), so the pop plays right after each swap. */
+  var lb = $('#lightbox'), lbImg = $('#lbImg');
+  if (lb && lbImg) {
+    function pop() {
+      gsap.fromTo(lbImg, { autoAlpha: 0, scale: 0.95 }, { autoAlpha: 1, scale: 1, duration: 0.45, ease: 'power2.out' });
+    }
+    ['#lbPrev', '#lbNext'].forEach(function (s) { var b = $(s); if (b) b.addEventListener('click', pop); });
+    document.addEventListener('keydown', function (e) {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') pop();
+    });
+    $$('#galleryGrid .masonry-item[data-full]').forEach(function (it) {
+      it.addEventListener('click', pop);
+      it.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') pop(); });
+    });
   }
 
   /* ---------- Magnetic buttons (fine pointers only) ---------- */
