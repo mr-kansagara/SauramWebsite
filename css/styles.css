@@ -1763,6 +1763,16 @@ html.js .reveal.in{opacity:1;transform:none}
 .author-card h3{font-family:var(--font-display);font-weight:400;font-size:1.1rem;color:var(--olive-900)}
 .author-card p{font-size:.86rem;color:var(--muted);margin-top:.2rem}
 
+/* ---------- GSAP layer (js/animations.js) ---------- */
+.scroll-progress{
+  position:fixed;top:0;left:0;right:0;height:3px;z-index:300;
+  background:linear-gradient(90deg, var(--gold), var(--gold-soft));
+  transform-origin:0 50%;transform:scaleX(0);
+  pointer-events:none;
+}
+/* When GSAP splits the hero headline, the CSS rise keyframes stand down */
+.gsap-split .hero-line{animation:none;opacity:1;transform:none}
+
 /* ---------- Reduced motion for interior components ---------- */
 @media (prefers-reduced-motion: reduce){
   .step-panel{animation:none}
