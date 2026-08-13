@@ -1627,7 +1627,7 @@ html.js .reveal.in{opacity:1;transform:none}
 .section-olive .vt-item p{color:rgba(247,243,234,.7)}
 
 /* ---------- People / team ---------- */
-.team-grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit, minmax(200px, 1fr))}
+.team-grid{display:grid;gap:var(--gap);grid-template-columns:repeat(auto-fit, minmax(200px, 260px));justify-content:center}
 .person{text-align:center}
 .person .avatar{
   aspect-ratio:1/1;border-radius:50%;overflow:hidden;
