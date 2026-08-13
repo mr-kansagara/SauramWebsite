@@ -159,14 +159,17 @@ home is live.
   Tokens can move to a theme file untouched.
 - Replace IntersectionObserver code with your framework idiom (e.g. a `useReveal` hook /
   Angular directive / Blazor JS interop) — the CSS contract is just "add `.in`".
-- **Logo assets:** the site uses the real brand artwork, machine-derived from
-  `Assets/SAURAM_logo.png` (black on white): `SAURAM_emblem_ivory.png` +
-  `SAURAM_emblem_dark.png` (round seal only — header swaps them via
-  `.site-header.scrolled` / `body.menu-open` CSS) and `SAURAM_logo_ivory.png`
-  (full lockup with wordmark + tagline — footer). All three are transparent PNGs with
-  luminance-mapped alpha, so antialiasing survives on any background. Regenerate from a
-  new master by re-running the ColorMatrix recolor (alpha = 1 − luminance; fill = ivory
-  `#F7F3EA` or olive `#212A17`).
+- **Logo assets:** the site uses the final vector brand artwork (two inks: brown
+  `#3B2409`, gold `#CE9633`). Sources live in `Assets/logos/` (emblem + wordmark) and
+  `Assets/SAURAM_LOGO_NEW/` (full lockup), each as SVG/PNG/PDF plus transparent PNG.
+  Web usage: `Assets/logos/SAURAM_emblem_circle.svg` (brown, scrolled header + favicon)
+  and `SAURAM_emblem_circle_ivory.svg` (recolor brown→ivory `#F7F3EA`, header over dark
+  hero — header swaps them via `.site-header.scrolled` / `body.menu-open` CSS);
+  `Assets/SAURAM_LOGO_NEW/SAURAM_logo_color_FINAL_ivory.svg` (full lockup, footer).
+  Ivory variants are the FINAL SVGs with `#3B2409` → `#F7F3EA` (gold untouched).
+  Raster icons: `Assets/favicon-64.png` (transparent) and `Assets/apple-touch-icon.png`
+  (180px on ivory). Old machine-derived PNGs (`SAURAM_logo*.png`, `SAURAM_emblem_*.png`
+  in `Assets/` root) are superseded.
 - Keep `html.js` gating (or SSR-safe equivalent) so content is never hidden without JS.
 
 ## 10. Pre-launch checklist (placeholders to replace)

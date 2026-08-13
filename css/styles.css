@@ -225,8 +225,8 @@ a:hover .text-link, .text-link:hover{gap:.7em}
   letter-spacing:.14em;
 }
 
-/* real seal artwork (generated from Assets/SAURAM_logo.png) —
-   ivory over dark hero, dark once the header turns to ivory glass */
+/* real seal artwork (SVGs from Assets/logos/SAURAM_emblem_circle*.svg) —
+   ivory over dark hero, brown once the header turns to ivory glass */
 .brand-logo{width:46px;height:46px;object-fit:contain;flex-shrink:0}
 .brand-logo-dark{display:none}
 .site-header.scrolled .brand-logo-light{display:none}
